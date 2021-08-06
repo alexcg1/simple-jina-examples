@@ -1,0 +1,11 @@
+colorama==0.4.4
+grpcio==1.39.0
+jina==2.0.16
+numpy==1.21.1
+Pillow==8.3.1
+pretty-errors==1.2.23
+protobuf==3.17.3
+PyYAML==5.4.1
+pyzmq==22.2.1
+six==1.16.0
+tornado==6.1
