@@ -13,7 +13,7 @@ for doc in docs:
 query_image.convert_image_uri_to_blob()
 
 flow = (
-    Flow(protocol="http", port_expose=12345)
+    Flow()
     .add(
         uses="jinahub+docker://ImageNormalizer",
         name="crafter",
@@ -49,6 +49,9 @@ def query_grpc(query_image):
 
 
 def query_restful():
+    flow.protocol = "http"
+    flow.port_expose = 12345
+
     with flow:
         print("== Querying ==")
         flow.block()
