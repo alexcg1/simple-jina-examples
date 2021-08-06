@@ -46,7 +46,6 @@ def query_grpc(query_image):
     with flow:
         print("== Querying via gRPC ==")
         flow.search(inputs=[query_image], on_done=print, top_k=1)
-        flow.block()
 
 
 def query_restful():
