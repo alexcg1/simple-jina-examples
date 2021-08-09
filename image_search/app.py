@@ -4,16 +4,24 @@ from jina.types.document.generators import from_files
 import os
 import sys
 
+class ToBlobExecutor(Executor):
+    @requests
+    def foo(self, docs, **kwargs):
+        for d in docs:
+            d.convert_image_uri_to_blob()
+
+
 docs = DocumentArray(from_files("data/**/*.png"))[:10]  # Limit number for now
 query_image = Document(uri="./data/1.png")
 
-for doc in docs:
-    doc.convert_image_uri_to_blob()
+# for doc in docs:
+    # doc.convert_image_uri_to_blob()
 
-query_image.convert_image_uri_to_blob()
+# query_image.convert_image_uri_to_blob()
 
 flow = (
     Flow()
+    .add(uses=ToBlobExecutor)
     .add(
         uses="jinahub+docker://ImageNormalizer",
         name="crafter",
