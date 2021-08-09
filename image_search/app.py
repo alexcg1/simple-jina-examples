@@ -53,7 +53,7 @@ def query_restful():
     flow.port_expose = 12345
 
     with flow:
-        print("== Querying ==")
+        print("== Querying via REST ==")
         flow.block()
 
 
