@@ -7,8 +7,6 @@ import sys
 
 
 # Process input docs for indexing and grpc query
-NUM_DOCS = 3 # Keeping this low for fast testing
-docs = DocumentArray(from_files("data/**/*.png"))[:NUM_DOCS]  # Limit number for now
 query_image = Document(uri="./data/1.png")
 
 
@@ -18,19 +16,19 @@ flow = (
     .add(
         uses="jinahub+docker://ImageNormalizer",
         name="crafter",
-        override_with={"target_size": 40},
+        uses_with={"target_size": 40},
     )
     .add(
         uses="jinahub+docker://BigTransferEncoder",
-        override_with={"model_name": "R50x1", "model_path": "model"},
-        override_metas={"workspace": "workspace"},
+        uses_with={"model_name": "R50x1", "model_path": "model"},
+        uses_metas={"workspace": "workspace"},
         name="encoder",
         volumes="./data:/encoder/data",
     )
     .add(
         uses="jinahub+docker://SimpleIndexer",
-        override_with={"index_file_name": "index"},
-        override_metas={"workspace": "workspace"},
+        uses_with={"index_file_name": "index"},
+        uses_metas={"workspace": "workspace"},
         name="indexer",
         volumes="./workspace:/workspace/workspace",
     )
@@ -41,6 +39,9 @@ def index():
     if os.path.exists("workspace"):
         print("'workspace' folder exists. Please delete")
         sys.exit()
+
+    NUM_DOCS = 3 # Keeping this low for fast testing
+    docs = DocumentArray(from_files("data/**/*.png"))[:NUM_DOCS]  # Limit number for now
 
     with flow:
         print("== Indexing ==")
