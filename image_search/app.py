@@ -5,6 +5,7 @@ from executors import ProcessFile
 import os
 import sys
 
+NUM_DOCS = 1000
 
 # Process input docs for indexing and grpc query
 query_image = Document(uri="./data/1.png")
@@ -40,7 +41,6 @@ def index():
         print("'workspace' folder exists. Please delete")
         sys.exit()
 
-    NUM_DOCS = 3 # Keeping this low for fast testing
     docs = DocumentArray(from_files("data/**/*.png"))[:NUM_DOCS]  # Limit number for now
 
     with flow:
