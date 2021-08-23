@@ -1,8 +1,14 @@
 import streamlit as st
+import magic
 from tempfile import NamedTemporaryFile
-from config import text_endpoint, image_endpoint, images_path, top_k, image_size
+from config import image_endpoint, images_path, top_k, image_size
+import base64
+
 import requests
 
+endpoint = image_endpoint
+text_endpoint = image_endpoint
+path = images_path
 
 def encode_to_base64(byte_string):
     import base64
@@ -26,8 +32,17 @@ def create_query(query: str, top_k: int, endpoint: str) -> list:
 
     return results
 
+def search_by_file(query):
+    data = query.read()
+    tempfile = NamedTemporaryFile()
+    # st.write(tempfile)
+    # st.write(tempfile.name)
 
-def get_images(query: str, endpoint: str, top_k: int) -> dict:
+    with open(tempfile.name, "wb") as file:
+        file.write(data)
+
+    filetype = magic.from_file(tempfile.name, mime=True)
+
     headers = {
         "Content-Type": "application/json",
     }
@@ -35,16 +50,31 @@ def get_images(query: str, endpoint: str, top_k: int) -> dict:
     data = (
         '{"parameters": {"top_k": '
         + str(top_k)
-        + '}, "mode": "search",  "data": ["data:image/png;base64,'
-        + query
-        + '"]}'
+        + '}, "mode": "search",  "data": [{"uri": "'
+        + tempfile.name
+        + '", "mime_type": "'
+        + filetype
+        + '"}]}'
     )
 
     response = requests.post(endpoint, headers=headers, data=data)
     content = response.json()
+    # st.write(content)
     matches = content["data"]["docs"][0]["matches"]
 
     return matches
+
+def process_image_matches(matches):
+    # st.json(matches)
+    # st.json(matches)
+    match = matches[0]
+    st.json(match)
+    blob = str.encode(match["blob"]["dense"]["buffer"])
+    # blob_bytes = base64.encode('ascii')
+    image_data = encode_to_base64(blob)
+    filetype = magic.from_buffer(image_data)
+    print(filetype)
+    image = f"data:/"
 
 
 def get_data(query: str, endpoint: str, top_k: int) -> dict:
@@ -89,28 +119,25 @@ st.markdown(
 # Sidebar
 st.sidebar.title("Jina Image Search")
 
-settings = st.sidebar.beta_expander(label="Settings", expanded=True)
+settings = st.sidebar.expander(label="Settings", expanded=True)
 with settings:
     endpoint = st.text_input(label="Endpoint", value=text_endpoint)
     top_k = st.number_input(label="Top K", value=top_k, step=1)
 
 st.title("Search images by similar image")
 query = st.file_uploader("Upload image")
-if query is not None:
-    image_data = query.read()
-    query = encode_to_base64(image_data)
 
 if st.button(label="Search"):
     if not query:
         st.markdown("Please enter a query")
     else:
+        matches = search_by_file(query)
+
         # Set up grid
-        cell1, cell2, cell3 = st.beta_columns(3)
-        cell4, cell5, cell6 = st.beta_columns(3)
-        cell7, cell8, cell9 = st.beta_columns(3)
+        cell1, cell2, cell3 = st.columns(3)
+        cell4, cell5, cell6 = st.columns(3)
+        cell7, cell8, cell9 = st.columns(3)
         all_cells = [cell1, cell2, cell3, cell4, cell5, cell6, cell7, cell8, cell9]
 
-        matches = get_images(query=query, endpoint=endpoint, top_k=top_k)
-
         for cell, match in zip(all_cells, matches):
-            cell.image("http:" + match["tags"]["image_url"])
+            cell.image(match["tags"]["uri_absolute"], width=128)
