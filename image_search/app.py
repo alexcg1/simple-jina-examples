@@ -1,7 +1,7 @@
 import pretty_errors
 from jina import Flow, DocumentArray, Document
 from jina.types.document.generators import from_files
-from executors import ToBlobExecutor
+from executors import ProcessFile
 import os
 import sys
 
@@ -12,7 +12,7 @@ query_image = Document(uri="./data/1.png")
 
 flow = (
     Flow()
-    .add(uses=ToBlobExecutor, name="blobbifier") # Embed image in doc, not just filename
+    .add(uses=ProcessFile, name="processor") # Embed image in doc, not just filename
     .add(
         uses="jinahub+docker://ImageNormalizer",
         name="crafter",
@@ -20,7 +20,7 @@ flow = (
     )
     .add(
         uses="jinahub+docker://BigTransferEncoder",
-        uses_with={"model_name": "R50x1", "model_path": "model"},
+        uses_with={"model_name": "Imagenet1k/R50x1", "model_path": "model"},
         uses_metas={"workspace": "workspace"},
         name="encoder",
         volumes="./data:/encoder/data",
