@@ -4,8 +4,6 @@ from config import image_endpoint, images_path, image_size
 from tempfile import NamedTemporaryFile
 
 headers = {"Content-Type": "application/json"}
-endpoint = image_endpoint
-
 
 class UI:
     css = f"""
@@ -22,7 +20,7 @@ class UI:
 """
 
 
-def search_by_file(query, top_k):
+def search_by_file(query, top_k, endpoint):
     data = query.read()
     tempfile = NamedTemporaryFile()
 

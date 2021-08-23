@@ -36,7 +36,7 @@ if st.button(label="Search"):
     if not query:
         st.markdown("Please enter a query")
     else:
-        matches = search_by_file(query, top_k)
+        matches = search_by_file(query, top_k, endpoint)
 
         # Set up grid
         cell1, cell2, cell3 = st.columns(3)
