@@ -40,12 +40,14 @@ def prep_docs(input_file, max_docs, output_dir, random_seed=42, shuffle=True):
         random.shuffle(memes)
 
     os.chdir(output_dir)
+    counter = 1
     for meme in memes[:max_docs]:
 
         # Download image
 
         url = f'http:{meme["image_url"]}'
         filename = meme["image_url"].split("/")[-1]
+        print(f"Downloading {filename} - {counter}/{max_docs}")
         try:
             r = requests.get(url, allow_redirects=True)
             if r.status_code == 200:
@@ -61,6 +63,7 @@ def prep_docs(input_file, max_docs, output_dir, random_seed=42, shuffle=True):
                 # print(doc)
 
                 # yield doc
+            counter += 1
         except:
             print(f"Error on {filename}, skipping.")
 
