@@ -25,14 +25,14 @@ flow = (
         uses="jinahub+docker://BigTransferEncoder",
         uses_with={"model_name": "Imagenet1k/R50x1", "model_path": "model"},
         uses_metas={"workspace": "workspace"},
-        name="encoder",
+        name="image_encoder",
         volumes="./data:/encoder/data",
     )
     .add(
         uses="jinahub+docker://SimpleIndexer",
         uses_with={"index_file_name": "index"},
         uses_metas={"workspace": "workspace"},
-        name="indexer",
+        name="image_indexer",
         volumes="./workspace:/workspace/workspace",
     )
 )
