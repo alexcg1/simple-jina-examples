@@ -53,16 +53,6 @@ def prep_docs(input_file, max_docs, output_dir, random_seed=42, shuffle=True):
             if r.status_code == 200:
                 with open(filename, "wb") as file:
                     file.write(r.content)
-                # Set Document content to downloaded image
-                # fixed_path = output_dir.split(".")[-1]
-                # path_to_image = f"./{fixed_path}/{filename}"
-                # # doc = Document(uri=path_to_image)
-                # doc.convert_image_uri_to_blob()
-                # # Set Document tags to metadata
-                # doc.tags = meme
-                # print(doc)
-
-                # yield doc
             counter += 1
         except:
             print(f"Error on {filename}, skipping.")
