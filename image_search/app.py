@@ -6,9 +6,11 @@ import os
 import sys
 
 NUM_DOCS = 1000
+FORMATS = ["jpg", "png"]
+DATADIR = "data"
 
 # Process input docs for indexing and grpc query
-query_image = Document(uri="./data/1.png")
+query_image = Document(uri=f"./data/1.{FORMATS[0]}")
 
 
 flow = (
@@ -35,13 +37,21 @@ flow = (
     )
 )
 
+def generate_docs(directory, num_docs=NUM_DOCS, formats=FORMATS):
+    docs = DocumentArray()
+    for format in formats:
+        docarray = DocumentArray(from_files(f"data/**/*.{format}", size=num_docs))
+        docs.extend(docarray)
+
+    return docs[:num_docs]
+        
 
 def index():
     if os.path.exists("workspace"):
         print("'workspace' folder exists. Please delete")
         sys.exit()
 
-    docs = DocumentArray(from_files("data/**/*.png"))[:NUM_DOCS]  # Limit number for now
+    docs = generate_docs(DATADIR, NUM_DOCS)
 
     with flow:
         print("== Indexing ==")
