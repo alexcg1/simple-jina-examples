@@ -9,10 +9,6 @@ NUM_DOCS = 1000
 FORMATS = ["jpg", "png"]
 DATADIR = "data"
 
-# Process input docs for indexing and grpc query
-query_image = Document(uri=f"./data/1.{FORMATS[0]}")
-
-
 flow = (
     Flow()
     .add(uses=ProcessFile, name="processor") # Embed image in doc, not just filename
@@ -54,14 +50,7 @@ def index():
     docs = generate_docs(DATADIR, NUM_DOCS)
 
     with flow:
-        print("== Indexing ==")
         flow.index(inputs=docs, show_progress=True)
-
-
-def query_grpc():
-    with flow:
-        print("== Querying via gRPC ==")
-        flow.search(inputs=[query_image], on_done=print, top_k=10)
 
 
 def query_restful():
@@ -69,7 +58,6 @@ def query_restful():
     flow.port_expose = 12345
 
     with flow:
-        print("== Querying via REST ==")
         flow.block()
 
 
@@ -79,7 +67,5 @@ if sys.argv[1] == "index":
     index()
 elif sys.argv[1] == "query_restful":
     query_restful()
-elif sys.argv[1] == "query_grpc":
-    query_grpc()
 else:
-    print("Supported arguments: index, query_restful, query_grpc")
+    print("Supported arguments: index, query_restful")
