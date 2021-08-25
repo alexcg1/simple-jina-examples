@@ -5,7 +5,7 @@ from executors import ProcessFile
 import os
 import sys
 
-NUM_DOCS = 1000
+NUM_DOCS = 10000
 FORMATS = ["jpg", "png"]
 DATADIR = "data"
 
@@ -36,7 +36,7 @@ flow = (
 def generate_docs(directory, num_docs=NUM_DOCS, formats=FORMATS):
     docs = DocumentArray()
     for format in formats:
-        docarray = DocumentArray(from_files(f"data/**/*.{format}", size=num_docs))
+        docarray = DocumentArray(from_files(f"{directory}/**/*.{format}", size=num_docs))
         docs.extend(docarray)
 
     return docs[:num_docs]
