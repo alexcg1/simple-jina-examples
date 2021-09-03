@@ -5,9 +5,10 @@ from executors import ProcessFile
 import os
 import sys
 
-NUM_DOCS = 10000
-FORMATS = ["jpg", "png"]
-DATADIR = "data"
+NUM_DOCS = 10_000
+FORMATS = ["jpg", "png", "jpeg"]
+DATA_DIR = "data"
+WORKSPACE_DIR = "workspace"
 
 flow = (
     Flow()
@@ -20,16 +21,16 @@ flow = (
     .add(
         uses="jinahub+docker://BigTransferEncoder",
         uses_with={"model_name": "Imagenet1k/R50x1", "model_path": "model"},
-        uses_metas={"workspace": "workspace"},
+        uses_metas={"workspace": WORKSPACE_DIR},
         name="image_encoder",
         volumes="./data:/encoder/data",
     )
     .add(
         uses="jinahub+docker://SimpleIndexer",
         uses_with={"index_file_name": "index"},
-        uses_metas={"workspace": "workspace"},
+        uses_metas={"workspace": WORKSPACE_DIR},
         name="image_indexer",
-        volumes="./workspace:/workspace/workspace",
+        volumes=f"./{WORKSPACE_DIR}:/workspace/workspace",
     )
 )
 
@@ -43,11 +44,11 @@ def generate_docs(directory, num_docs=NUM_DOCS, formats=FORMATS):
         
 
 def index():
-    if os.path.exists("workspace"):
-        print("'workspace' folder exists. Please delete")
+    if os.path.exists(WORKSPACE_DIR):
+        print(f"'{WORKSPACE_DIR}' folder exists. Please delete")
         sys.exit()
 
-    docs = generate_docs(DATADIR, NUM_DOCS)
+    docs = generate_docs(DATA_DIR, NUM_DOCS)
 
     with flow:
         flow.index(inputs=docs, show_progress=True)
