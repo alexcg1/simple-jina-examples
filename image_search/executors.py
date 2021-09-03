@@ -2,7 +2,7 @@ from jina import Executor, requests
 import os
 
 
-class ProcessFile(Executor):
+class UriToBlob(Executor):
     @requests
     def foo(self, docs, **kwargs):
         for doc in docs:
