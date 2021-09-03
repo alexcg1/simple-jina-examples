@@ -1,7 +1,7 @@
 import pretty_errors
 from jina import Flow, DocumentArray, Document
 from jina.types.document.generators import from_files
-from executors import ProcessFile
+from executors import UriToBlob
 import os
 import sys
 
@@ -12,7 +12,7 @@ WORKSPACE_DIR = "workspace"
 
 flow = (
     Flow()
-    .add(uses=ProcessFile, name="processor") # Embed image in doc, not just filename
+    .add(uses=UriToBlob, name="processor") # Embed image in doc, not just filename
     .add(
         uses="jinahub+docker://ImageNormalizer",
         name="crafter",
