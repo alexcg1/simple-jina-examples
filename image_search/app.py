@@ -5,7 +5,7 @@ from executors import UriToBlob
 import os
 import sys
 
-NUM_DOCS = 10_000
+NUM_DOCS = 10
 FORMATS = ["jpg", "png", "jpeg"]
 DATA_DIR = "data"
 WORKSPACE_DIR = "workspace"
@@ -26,7 +26,7 @@ flow = (
         volumes="./data:/encoder/data",
     )
     .add(
-        uses="jinahub+docker://SimpleIndexer",
+        uses="jinahub+docker://SimpleIndexer/old",
         uses_with={"index_file_name": "index"},
         uses_metas={"workspace": WORKSPACE_DIR},
         name="image_indexer",
