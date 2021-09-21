@@ -15,7 +15,7 @@ flow = (
     .add(uses=UriToBlob, name="processor") # Embed image in doc, not just filename
     .add(
         uses="jinahub+docker://ImageNormalizer",
-        name="crafter",
+        name="image_normalizer",
         uses_with={"target_size": 96},
     )
     .add(
@@ -28,7 +28,7 @@ flow = (
     .add(
         uses="jinahub+docker://SimpleIndexer",
         uses_metas={"workspace": WORKSPACE_DIR},
-        name="simple_indexer",
+        name="meme_image_simple_indexer",
         volumes=f"./{WORKSPACE_DIR}:/workspace/workspace",
     )
 )
