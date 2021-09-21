@@ -15,21 +15,21 @@ flow = (
     .add(uses=UriToBlob, name="processor") # Embed image in doc, not just filename
     .add(
         uses="jinahub+docker://ImageNormalizer",
-        name="crafter",
-        uses_with={"target_size": 40},
+        name="image_normalizer",
+        uses_with={"target_size": 96},
     )
     .add(
         uses="jinahub+docker://BigTransferEncoder",
         uses_with={"model_name": "Imagenet1k/R50x1", "model_path": "model"},
         uses_metas={"workspace": WORKSPACE_DIR},
-        name="image_encoder",
+        name="bit_image_encoder",
         volumes="./data:/encoder/data",
     )
     .add(
-        uses="jinahub+docker://SimpleIndexer/old",
+        uses="jinahub+docker://SimpleIndexer",
         uses_with={"index_file_name": "index"},
         uses_metas={"workspace": WORKSPACE_DIR},
-        name="image_indexer",
+        name="meme_image_simple_indexer",
         volumes=f"./{WORKSPACE_DIR}:/workspace/workspace",
     )
 )
