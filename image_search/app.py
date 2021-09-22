@@ -12,7 +12,7 @@ WORKSPACE_DIR = "workspace"
 
 flow = (
     Flow()
-    .add(uses=UriToBlob, name="processor") # Embed image in doc, not just filename
+    .add(uses="jinahub+docker://ImageUriToBlob", name="processor") # Embed image in doc, not just filename
     .add(
         uses="jinahub+docker://ImageNormalizer",
         name="image_normalizer",
