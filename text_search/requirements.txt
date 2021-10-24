@@ -1,2 +1,0 @@
-jina==2.0.18
-pretty-errors==1.2.23

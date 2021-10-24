@@ -1,3 +1,0 @@
-av==8.0.3
-jina==2.0.18
-torchvision==0.10.0
