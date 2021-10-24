@@ -1,6 +1,7 @@
 # In this example we do the following:
 # 1. Change to a more "real-world" csv
 # 2. Extract text and metadata from the csv
+# 3. Rewrite print_search_results() in helper.py to show "Title" metadata tag
 
 from jina import Document, DocumentArray, Flow
 from jina.types.document.generators import from_csv
