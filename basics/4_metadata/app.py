@@ -8,6 +8,7 @@ from jina.types.document.generators import from_csv
 from helper import print_search_results
 
 with open("data/anime.csv") as file:
+    # Map "Description" field to our `Document.text`
     docs = DocumentArray(from_csv(file, field_resolver={"Description": "text"}))
 
 flow = (
@@ -30,4 +31,5 @@ with flow:
     query = Document(text=input("Please enter your search term: "))
     response = flow.search(inputs=query, return_results=True)
 
+# This is re-written in helper.py
 print_search_results(response)

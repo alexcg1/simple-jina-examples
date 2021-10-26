@@ -8,6 +8,7 @@ def print_search_results(response, number=5):
     print("===================\n")
 
     for match in matches[0:number]:
+        # Access tags and print "Title" value for the Document
         print(match.tags["Title"])
         print("-----------")
         print(f"= {match.text}\n")

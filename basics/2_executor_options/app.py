@@ -10,12 +10,16 @@ flow = (
     Flow()
     .add(
         uses="jinahub+docker://SpacyTextEncoder",
+        # Change to "medium" model for better encoding
         uses_with={"model_name": "en_core_web_md"},
         name="encoder",
     )
     .add(
+        # Switch `uses` to pull from Docker, so we can pass `metas`
         uses="jinahub+docker://SimpleIndexer",
+        # Set workspace directory name
         uses_metas={"workspace": "workspace"},
+        # Use external volume otherwise Docker can't see our index
         volumes="./workspace:/workspace/workspace",
         name="indexer",
     )

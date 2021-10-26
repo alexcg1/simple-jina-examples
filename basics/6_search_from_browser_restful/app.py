@@ -40,6 +40,7 @@ def search_restful():
     with flow:
         flow.protocol = "http"
         flow.port_expose = PORT
+        # Keep Flow open until terminated by user
         flow.block()
 
 
