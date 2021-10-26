@@ -1,7 +1,9 @@
 from jina import Document, DocumentArray, Flow
 
+# A DocumentArray is a list of Documents.
 docs = DocumentArray(
     [
+        # We set the `text` of each Document to a line from "Squid Game"
         Document(text="I’m Good At Everything, Except The Things I Can’t Do."),
         Document(
             text="I Don’t Have A Home To Go Back To. In Here, I Stand A Chance At Least. But Out There? I Got Nothing Out There."
@@ -16,21 +18,32 @@ docs = DocumentArray(
     ]
 )
 
+# Create a new Flow to process our Documents
 flow = (
     Flow()
+    # Add encoder, to convert text to vector embeddings
     .add(uses="jinahub+docker://SpacyTextEncoder", name="encoder")
+    # Add indexer
+    # When indexing it embeds embeddings in a graph
+    # When searching it retrieves nearest neighbor to search term
     .add(uses="jinahub://SimpleIndexer", install_requirements=True, name="indexer")
 )
 
+# Open Flow as context manager
 with flow:
+    # Index our DocumentArray of Squid Game Documents
     flow.index(inputs=docs)
+    # Create a Document containing our search term. In this case, we take it from user's input
     query = Document(text=input("Please enter your search term: "))
+    # Search the index, return similar matches, and store in `response`
     response = flow.search(inputs=query, return_results=True)
 
+# Pull out the matches from all the other data in the response
 matches = response[0].data.docs[0].matches
 
 print("Your search results")
 print("-------------------\n")
 
 for match in matches:
+    # Print the text of each match (from `Document.text`)
     print(f"- {match.text}")
