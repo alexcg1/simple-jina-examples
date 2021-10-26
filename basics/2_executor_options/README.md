@@ -1,4 +1,4 @@
-# 2. Passing parameters
+# 2. Setting Executor options
 
 In this example we:
 

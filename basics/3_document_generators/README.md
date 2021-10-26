@@ -1,4 +1,4 @@
-# 3 Document generators
+# 3. Document generators
 
 In this unit we:
 
