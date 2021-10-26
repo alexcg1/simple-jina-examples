@@ -4,6 +4,8 @@
 
 These examples are intended to give you hands-on experience with the basic concepts you need to get up and running with [Jina](https://github.com/jina-ai/jina/). 
 
+Each step adds another small feature on top of the previous step, so be sure to go through each step in order.
+
 ## What are they not for?
 
 - They're not meant to be comprehensive
@@ -21,6 +23,8 @@ These examples are intended to give you hands-on experience with the basic conce
 2. `pip install -r requirements.txt`
 3. `cd basics/1_minimum_example`
 4. `python app.py`
+
+Then take a look at the code. The apps in themselves do very little, but slowly build up to a more complex app. After you've finished `1_minimum_example`, move onto `2_passing_parameters` and so on.
 
 ## Help! Nothing works!
 
