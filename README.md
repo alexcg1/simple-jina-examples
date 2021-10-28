@@ -26,6 +26,21 @@ Each step adds another small feature on top of the previous step, so be sure to 
 
 Then take a look at the code. The apps in themselves do very little, but slowly build up to a more complex app. After you've finished `1_minimum_example`, move onto section 2 and so on.
 
-## Help! Nothing works!
+## Troubleshooting
+
+**First** run:
+
+- `git pull` to ensure you're using the latest code for these examples
+- `pip install -U jina` to ensure you're using the latest release of Jina
+
+### `Flow is aborted due to ['xxx'] can not be started`
+
+This may be a timeout error. Add `timeout_ready=240000` to the Executor in your Flow:
+
+```python
+flow = Flow().add(uses="foo", timeout_ready=240000)
+```
+
+### I'm still having trouble!
 
 - Join our [Discord](https://discord.jina.ai) and ask there.
