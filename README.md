@@ -41,6 +41,8 @@ This may be a timeout error. Add `timeout_ready=240000` to the Executor in your 
 flow = Flow().add(uses="foo", timeout_ready=240000)
 ```
 
+Also, [stop any Jina Docker containers](https://linuxhint.com/stop_docker_containers/) that are currently running.
+
 ### I'm still having trouble!
 
 - Join our [Discord](https://discord.jina.ai) and ask there.
