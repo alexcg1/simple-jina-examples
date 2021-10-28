@@ -22,7 +22,8 @@ docs = DocumentArray(
 flow = (
     Flow()
     # Add encoder, to convert text to vector embeddings
-    .add(uses="jinahub+docker://SpacyTextEncoder", name="encoder")
+    # .add(uses="jinahub+docker://SpacyTextEncoder", name="encoder")
+    .add(uses="jinahub://SpacyTextEncoder", name="encoder", install_requirements=True)
     # Add indexer
     # When indexing it embeds embeddings in a graph
     # When searching it retrieves nearest neighbor to search term
