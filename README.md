@@ -1,9 +1,3 @@
-# Deprecation notice
-
-I don't have time to update this repo. I strongly suggest you use other examples, since the examples here are extremely likely to be broken.
-
----
-
 # Jina Simple Examples
 
 ## What are these examples for?
@@ -46,6 +40,8 @@ This may be a timeout error. Add `timeout_ready=240000` to the Executor in your 
 ```python
 flow = Flow().add(uses="foo", timeout_ready=240000)
 ```
+### Any error 
+This may be due to using an older version of hub. Please delete your cache using `rm -rf ~/.jina` and then try running again.
 
 Also, [stop any Jina Docker containers](https://linuxhint.com/stop_docker_containers/) that are currently running.
 
