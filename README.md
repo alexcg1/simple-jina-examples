@@ -1,3 +1,9 @@
+# Deprecation notice
+
+I don't have time to update this repo. I strongly suggest you use other examples, since the examples here are extremely likely to be broken.
+
+---
+
 # Jina Simple Examples
 
 ## What are these examples for?
