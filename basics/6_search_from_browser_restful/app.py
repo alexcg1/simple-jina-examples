@@ -11,7 +11,7 @@ with open("data/anime.csv") as file:
 flow = (
     Flow()
     .add(
-        uses="jinahub+docker://SpacyTextEncoder",
+        uses="jinahub://SpacyTextEncoder",
         uses_with={"model_name": "en_core_web_md"},
         name="encoder",
     )

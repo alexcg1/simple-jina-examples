@@ -9,7 +9,7 @@ from helper import docs, print_search_results
 flow = (
     Flow()
     .add(
-        uses="jinahub+docker://SpacyTextEncoder",
+        uses="jinahub://SpacyTextEncoder",
         # Change to "medium" model for better encoding
         uses_with={"model_name": "en_core_web_md"},
         name="encoder",
