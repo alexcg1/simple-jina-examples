@@ -13,6 +13,7 @@ flow = (
         # Change to "medium" model for better encoding
         uses_with={"model_name": "en_core_web_md"},
         name="encoder",
+        install_requirements=True
     )
     .add(
         # Switch `uses` to pull from Docker, so we can pass `metas`
@@ -22,6 +23,7 @@ flow = (
         # Use external volume otherwise Docker can't see our index
         volumes="./workspace:/workspace/workspace",
         name="indexer",
+        install_requirements=True
     )
 )
 

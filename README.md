@@ -41,7 +41,7 @@ This may be a timeout error. Add `timeout_ready=240000` to the Executor in your 
 flow = Flow().add(uses="foo", timeout_ready=240000)
 ```
 ### Any error 
-This may be due to using an older version of hub. Please delete your cache using `rm -rf ~/.jina` and then try running again.
+This may be due to using an older version of Jina Hub. Please delete your cache using `rm -rf ~/.jina` and then try running again.
 
 Also, [stop any Jina Docker containers](https://linuxhint.com/stop_docker_containers/) that are currently running.
 

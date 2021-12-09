@@ -14,12 +14,14 @@ flow = (
         uses="jinahub://SpacyTextEncoder",
         uses_with={"model_name": "en_core_web_md"},
         name="encoder",
+        install_requirements=True
     )
     .add(
         uses="jinahub+docker://SimpleIndexer",
         uses_metas={"workspace": "workspace"},
         volumes="./workspace:/workspace/workspace",
         name="indexer",
+        install_requirements=True
     )
 )
 
