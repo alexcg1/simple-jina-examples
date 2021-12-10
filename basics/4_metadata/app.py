@@ -24,7 +24,6 @@ flow = (
         uses_metas={"workspace": "workspace"},
         volumes="./workspace:/workspace/workspace",
         name="indexer",
-        install_requirements=True
     )
 )
 

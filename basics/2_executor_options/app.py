@@ -23,7 +23,6 @@ flow = (
         # Use external volume otherwise Docker can't see our index
         volumes="./workspace:/workspace/workspace",
         name="indexer",
-        install_requirements=True
     )
 )
 
