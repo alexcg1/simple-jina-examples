@@ -1,5 +1,5 @@
 from jina import Document, DocumentArray, Flow
-from jina.types.document.generators import from_csv
+from docarray.document.generators import from_csv
 from helper import print_search_results
 import sys
 
